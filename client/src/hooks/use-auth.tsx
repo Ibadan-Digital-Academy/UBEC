@@ -28,7 +28,17 @@ async function fetchUser(): Promise<User | null> {
     } = await supabase.auth.getSession();
     const token = session?.access_token;
 
-    if (!token) return null;
+    if (!token) {
+        return {
+            id: user.id,
+            email: user.email ?? '',
+            firstName: undefined,
+            lastName: undefined,
+            profileImageUrl: undefined,
+            createdAt: undefined,
+            updatedAt: undefined,
+        } as unknown as User;
+    }
 
     const response = await fetch('/api/user', {
         headers: {
@@ -36,7 +46,17 @@ async function fetchUser(): Promise<User | null> {
         },
     });
 
-    if (!response.ok) return null;
+    if (!response.ok) {
+        return {
+            id: user.id,
+            email: user.email ?? '',
+            firstName: undefined,
+            lastName: undefined,
+            profileImageUrl: undefined,
+            createdAt: undefined,
+            updatedAt: undefined,
+        } as unknown as User;
+    }
     return response.json();
 }
 

@@ -117,28 +117,6 @@ export default function Data() {
         );
     }
 
-    if (!isAuthenticated) {
-        return (
-            <div className="min-h-screen bg-background flex flex-col items-center justify-center p-6 text-center">
-                <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mb-6 text-primary">
-                    <Lock className="w-10 h-10" />
-                </div>
-                <h1 className="text-2xl font-bold mb-2">Access Restricted</h1>
-                <p className="text-gray-500 mb-8 max-w-sm">
-                    Please create an account or log in to view and download the
-                    complete school database.
-                </p>
-                <Button
-                    onClick={() => setLocation('/auth')}
-                    size="lg"
-                    className="px-8"
-                >
-                    Go to Login
-                </Button>
-            </div>
-        );
-    }
-
     return (
         <div className="min-h-screen bg-background pb-20 font-sans">
             <div className="max-w-md mx-auto min-h-screen flex flex-col bg-background relative">
