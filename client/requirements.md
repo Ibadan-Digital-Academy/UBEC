@@ -1,4 +1,5 @@
 ## Packages
+
 framer-motion | Smooth animations for page transitions and interactions
 clsx | Utility for constructing className strings conditionally
 tailwind-merge | Utility for merging Tailwind CSS classes
@@ -11,26 +12,27 @@ lucide-react | Icon set to replace Material Icons for better React integration
 date-fns | Date formatting utilities
 
 ## Notes
+
 Tailwind Config - extend colors:
 colors: {
-  primary: {
-    DEFAULT: "#2E7D32",
-    dark: "#1B5E20",
-    light: "#4CAF50",
-    foreground: "#FFFFFF",
-  },
-  background: {
-    light: "#F9FAFB",
-    dark: "#121212",
-  },
-  surface: {
-    light: "#FFFFFF",
-    dark: "#1E1E1E",
-  },
-  accent: {
-    DEFAULT: "#FFC107",
-    foreground: "#000000",
-  }
+primary: {
+DEFAULT: "#2E7D32",
+dark: "#1B5E20",
+light: "#4CAF50",
+foreground: "#FFFFFF",
+},
+background: {
+light: "#F9FAFB",
+dark: "#121212",
+},
+surface: {
+light: "#FFFFFF",
+dark: "#1E1E1E",
+},
+accent: {
+DEFAULT: "#FFC107",
+foreground: "#000000",
+}
 }
 
 The backend API is defined in shared/routes.ts.

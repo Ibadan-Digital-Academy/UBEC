@@ -1,7 +1,7 @@
-import { createContext, useContext, useEffect, ReactNode } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/lib/supabase";
-import type { User } from "@shared/models/auth";
+import { createContext, useContext, useEffect, ReactNode } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { supabase } from '@/lib/supabase';
+import type { User } from '@shared/models/auth';
 
 type AuthContextType = {
     user: User | null;
@@ -30,7 +30,7 @@ async function fetchUser(): Promise<User | null> {
 
     if (!token) return null;
 
-    const response = await fetch("/api/user", {
+    const response = await fetch('/api/user', {
         headers: {
             Authorization: `Bearer ${token}`,
         },
@@ -48,7 +48,7 @@ export function useAuthInternal() {
     const queryClient = useQueryClient();
 
     const query = useQuery<User | null>({
-        queryKey: ["user-session"],
+        queryKey: ['user-session'],
         queryFn: fetchUser,
         retry: false,
         staleTime: 0,
@@ -59,7 +59,7 @@ export function useAuthInternal() {
         const {
             data: { subscription },
         } = supabase.auth.onAuthStateChange(() => {
-            queryClient.invalidateQueries({ queryKey: ["user-session"] });
+            queryClient.invalidateQueries({ queryKey: ['user-session'] });
         });
 
         return () => {
@@ -70,8 +70,8 @@ export function useAuthInternal() {
     const logoutMutation = useMutation({
         mutationFn: logoutUser,
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["user-session"] });
-            window.location.href = "/auth";
+            queryClient.invalidateQueries({ queryKey: ['user-session'] });
+            window.location.href = '/auth';
         },
     });
 
@@ -93,7 +93,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 export function useAuth() {
     const context = useContext(AuthContext);
     if (!context) {
-        throw new Error("useAuthContext must be used within an AuthProvider");
+        throw new Error('useAuthContext must be used within an AuthProvider');
     }
     return context;
 }
