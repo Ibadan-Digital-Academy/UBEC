@@ -1,19 +1,21 @@
 [build]
   command = "npm run build"
-  publish = "dist/public" # Update this to point to the client assets folder
-  environment = { SECRETS_SCAN_OMIT_KEYS = "SUPABASE_URL,VITE_SUPABASE_URL,VITE_SUPABASE_ANON_KEY" }
+  publish = "dist/public"
 
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"
-  # Add all dev-heavy or native modules here to skip bundling errors
+  # We exclude these to keep the function small and avoid ESM/CJS conflicts
   external_node_modules = [
-    "express", 
-    "vite", 
-    "@babel/core", 
-    "lightningcss", 
-    "framer-motion"
+    "express",
+    "pg",
+    "drizzle-orm",
+    "ws"
   ]
+
+[functions."api"]
+  # Specifically for your API function
+  included_files = ["dist/public/index.html"]
 
 [[redirects]]
   from = "/api/*"
