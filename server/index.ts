@@ -1,8 +1,9 @@
 import 'dotenv/config';
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
-import { serveStatic } from "./static";
 import { createServer } from "http";
+import path from "path";
+import { fileURLToPath } from "url";
 
 export const app = express();
 const httpServer = createServer(app);
@@ -70,7 +71,8 @@ export const initApp = async () => {
   });
 
   if (process.env.NODE_ENV === "production") {
-    serveStatic(app);
+    const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
   } else {
     const { setupVite } = await import("./vite");
     await setupVite(httpServer, app);
