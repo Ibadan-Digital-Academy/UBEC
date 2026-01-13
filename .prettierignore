@@ -1,0 +1,15 @@
+# Build directories
+dist/
+node_modules/
+
+# Lock files (let npm/yarn manage them)
+package-lock.json
+yarn.lock
+
+# Generated files
+*.min.js
+*.min.css
+
+# Misc
+.DS_Store
+.env
