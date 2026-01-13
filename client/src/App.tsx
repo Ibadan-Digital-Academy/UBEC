@@ -20,9 +20,9 @@ function Router() {
             <Route path="/auth" component={AuthPage} />
             <Route path="/" component={Home} />
             <Route path="/data" component={Data} />
+            <Route path="/data/:id" component={SchoolDetails} />
 
             {/* Protected Routes - only logged in users can see these */}
-            <ProtectedRoute path="/data/:id" component={SchoolDetails} />
             <ProtectedRoute path="/map" component={MapPage} />
             <ProtectedRoute path="/profile" component={Profile} />
 
@@ -36,8 +36,6 @@ function App() {
     return (
         <QueryClientProvider client={queryClient}>
             <AuthProvider>
-                {' '}
-                {/* Adds Supabase user context to the whole app */}
                 <TooltipProvider>
                     <Toaster />
                     <Router />
