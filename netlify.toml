@@ -10,7 +10,10 @@
     "express",
     "pg",
     "drizzle-orm",
-    "ws"
+    "ws",
+    "vite",
+    "@babel/core",
+    "lightningcss"
   ]
 
 [functions."api"]
