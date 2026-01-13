@@ -1,20 +1,20 @@
-import { useState } from "react";
-import { useAuth } from "@/hooks/use-auth";
-import { Redirect } from "wouter";
-import { supabase } from "@/lib/supabase";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { useState } from 'react';
+import { useAuth } from '@/hooks/use-auth';
+import { Redirect } from 'wouter';
+import { supabase } from '@/lib/supabase';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
     Card,
     CardContent,
     CardDescription,
     CardHeader,
     CardTitle,
-} from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Label } from "@/components/ui/label";
-import { Loader2, GraduationCap } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+} from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Label } from '@/components/ui/label';
+import { Loader2, GraduationCap } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 export default function AuthPage() {
     const { user, isLoading } = useAuth();
@@ -22,8 +22,8 @@ export default function AuthPage() {
     const [isPending, setIsPending] = useState(false);
 
     // Form states
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
     if (isLoading) {
         return (
@@ -38,31 +38,38 @@ export default function AuthPage() {
         return <Redirect to="/" />;
     }
 
-    const handleEmailAuth = async (type: "login" | "signup") => {
+    const handleEmailAuth = async (type: 'login' | 'signup') => {
         setIsPending(true);
         try {
             const { error } =
-                type === "login"
+                type === 'login'
                     ? await supabase.auth.signInWithPassword({
                           email,
                           password,
                       })
-                    : await supabase.auth.signUp({ email, password });
+                    : await supabase.auth.signUp({
+                          email,
+                          password,
+                          options: {
+                              // This tells Supabase: "After confirmation, send them back to the current domain"
+                              emailRedirectTo: `${window.location.origin}/`,
+                          },
+                      });
 
             if (error) throw error;
 
             toast({
-                title: type === "login" ? "Welcome back!" : "Account created!",
+                title: type === 'login' ? 'Welcome back!' : 'Account created!',
                 description:
-                    type === "signup"
-                        ? "Please check your email for a verification link."
-                        : "Logging you in...",
+                    type === 'signup'
+                        ? 'Please check your email for a verification link.'
+                        : 'Logging you in...',
             });
         } catch (error: any) {
             toast({
-                title: "Authentication Error",
+                title: 'Authentication Error',
                 description: error.message,
-                variant: "destructive",
+                variant: 'destructive',
             });
         } finally {
             setIsPending(false);
@@ -71,14 +78,14 @@ export default function AuthPage() {
 
     const handleGoogleLogin = async () => {
         const { error } = await supabase.auth.signInWithOAuth({
-            provider: "google",
+            provider: 'google',
             options: { redirectTo: window.location.origin },
         });
         if (error) {
             toast({
-                title: "Google Login Failed",
+                title: 'Google Login Failed',
                 description: error.message,
-                variant: "destructive",
+                variant: 'destructive',
             });
         }
     };
@@ -155,9 +162,7 @@ export default function AuthPage() {
                                         id="email"
                                         type="email"
                                         value={email}
-                                        onChange={(e) =>
-                                            setEmail(e.target.value)
-                                        }
+                                        onChange={e => setEmail(e.target.value)}
                                         required
                                     />
                                 </div>
@@ -167,7 +172,7 @@ export default function AuthPage() {
                                         id="password"
                                         type="password"
                                         value={password}
-                                        onChange={(e) =>
+                                        onChange={e =>
                                             setPassword(e.target.value)
                                         }
                                         required
@@ -175,12 +180,12 @@ export default function AuthPage() {
                                 </div>
                                 <Button
                                     className="w-full"
-                                    onClick={() => handleEmailAuth("login")}
+                                    onClick={() => handleEmailAuth('login')}
                                     disabled={isPending}
                                 >
                                     {isPending && (
                                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                    )}{" "}
+                                    )}{' '}
                                     Login
                                 </Button>
                             </TabsContent>
@@ -195,9 +200,7 @@ export default function AuthPage() {
                                         id="reg-email"
                                         type="email"
                                         value={email}
-                                        onChange={(e) =>
-                                            setEmail(e.target.value)
-                                        }
+                                        onChange={e => setEmail(e.target.value)}
                                         required
                                     />
                                 </div>
@@ -209,7 +212,7 @@ export default function AuthPage() {
                                         id="reg-password"
                                         type="password"
                                         value={password}
-                                        onChange={(e) =>
+                                        onChange={e =>
                                             setPassword(e.target.value)
                                         }
                                         required
@@ -217,12 +220,12 @@ export default function AuthPage() {
                                 </div>
                                 <Button
                                     className="w-full"
-                                    onClick={() => handleEmailAuth("signup")}
+                                    onClick={() => handleEmailAuth('signup')}
                                     disabled={isPending}
                                 >
                                     {isPending && (
                                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                    )}{" "}
+                                    )}{' '}
                                     Create Account
                                 </Button>
                             </TabsContent>

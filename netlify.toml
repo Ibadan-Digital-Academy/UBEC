@@ -1,6 +1,7 @@
 [build]
   command = "npm run build"
   publish = "dist/public" # Update this to point to the client assets folder
+  environment = { SECRETS_SCAN_OMIT_KEYS = "SUPABASE_URL,VITE_SUPABASE_URL,VITE_SUPABASE_ANON_KEY" }
 
 [functions]
   directory = "netlify/functions"
