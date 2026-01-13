@@ -7,13 +7,14 @@
   node_bundler = "esbuild"
   # We exclude these to keep the function small and avoid ESM/CJS conflicts
   external_node_modules = [
-    "express",
+   "express",
     "pg",
     "drizzle-orm",
     "ws",
     "vite",
     "@babel/core",
-    "lightningcss"
+    "lightningcss",
+    "framer-motion"
   ]
 
 [functions."api"]

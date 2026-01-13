@@ -11,20 +11,19 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 export const initApp = async () => {
-  // Pass the server and app to routes
   await registerRoutes(httpServer, app);
 
-  // Global Error Handler
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
     res.status(status).json({ message: err.message || "Internal Server Error" });
   });
 
-  // CRITICAL FIX: Explicitly check for Netlify or Production
   const isProd = process.env.NODE_ENV === "production" || !!process.env.NETLIFY;
 
   if (!isProd) {
-    const { setupVite } = await import("./vite");
+    // Using a template literal `${...}` hides this from the static bundler
+    const viteModule = "./vite";
+    const { setupVite } = await import(viteModule);
     await setupVite(httpServer, app);
   }
   

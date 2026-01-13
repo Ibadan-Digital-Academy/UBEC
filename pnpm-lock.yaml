@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@babel/core':
-        specifier: ^7.28.6
-        version: 7.28.6
       '@hookform/resolvers':
         specifier: ^3.10.0
         version: 3.10.0(react-hook-form@7.71.0(react@18.3.1))
@@ -155,9 +152,6 @@ importers:
       input-otp:
         specifier: ^1.4.2
         version: 1.4.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      lightningcss:
-        specifier: ^1.30.2
-        version: 1.30.2
       lucide-react:
         specifier: ^0.453.0
         version: 0.453.0(react@18.3.1)
@@ -240,6 +234,9 @@ importers:
         specifier: ^3.4.0
         version: 3.5.4(zod@3.25.76)
     devDependencies:
+      '@babel/core':
+        specifier: ^7.28.6
+        version: 7.28.6
       '@replit/vite-plugin-cartographer':
         specifier: ^0.4.4
         version: 0.4.4
@@ -303,6 +300,9 @@ importers:
       esbuild:
         specifier: ^0.25.0
         version: 0.25.12
+      lightningcss:
+        specifier: ^1.30.2
+        version: 1.30.2
       postcss:
         specifier: ^8.4.47
         version: 8.5.6
@@ -3659,8 +3659,8 @@ snapshots:
 
   '@babel/generator@7.28.5':
     dependencies:
-      '@babel/parser': 7.28.5
-      '@babel/types': 7.28.5
+      '@babel/parser': 7.28.6
+      '@babel/types': 7.28.6
       '@jridgewell/gen-mapping': 0.3.13
       '@jridgewell/trace-mapping': 0.3.31
       jsesc: 3.1.0
@@ -3734,9 +3734,9 @@ snapshots:
 
   '@babel/template@7.27.2':
     dependencies:
-      '@babel/code-frame': 7.27.1
-      '@babel/parser': 7.28.5
-      '@babel/types': 7.28.5
+      '@babel/code-frame': 7.28.6
+      '@babel/parser': 7.28.6
+      '@babel/types': 7.28.6
 
   '@babel/template@7.28.6':
     dependencies:
@@ -4982,16 +4982,16 @@ snapshots:
 
   '@types/babel__generator@7.27.0':
     dependencies:
-      '@babel/types': 7.28.5
+      '@babel/types': 7.28.6
 
   '@types/babel__template@7.4.4':
     dependencies:
-      '@babel/parser': 7.28.5
-      '@babel/types': 7.28.5
+      '@babel/parser': 7.28.6
+      '@babel/types': 7.28.6
 
   '@types/babel__traverse@7.28.0':
     dependencies:
-      '@babel/types': 7.28.5
+      '@babel/types': 7.28.6
 
   '@types/bcryptjs@2.4.6': {}
 
