@@ -2,7 +2,6 @@
 import { pgTable, text, serial, jsonb, timestamp, boolean } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
-export * from "./models/auth";
 
 export const schools = pgTable("NGSchools", {
   // Use 'serial' only if you are okay with Drizzle trying to create it
