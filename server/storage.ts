@@ -1,4 +1,3 @@
-// server/storage.ts
 import { db } from "./db";
 import { schools, users, type InsertSchool, type School, type SchoolFilters, type PaginatedSchools, type User } from "@shared/schema";
 import { eq, ilike, and, sql, count } from "drizzle-orm";
@@ -21,13 +20,14 @@ export class DatabaseStorage implements IStorage {
   }
   
   async getAnalytics() {
+    // Adding Number() conversion to handle string/BigInt returns from Postgres count
     const totalResult = await db.select({ count: count() }).from(schools);
     const byState = await db.select({ name: schools.state, count: count() }).from(schools).groupBy(schools.state);
     const byType = await db.select({ name: schools.type, count: count() }).from(schools).groupBy(schools.type);
     const byLevel = await db.select({ name: schools.level, count: count() }).from(schools).groupBy(schools.level);
 
     return {
-      totalSchools: totalResult[0].count,
+      totalSchools: Number(totalResult[0].count),
       byState: byState.map(s => ({ name: s.name || 'Unknown', count: Number(s.count) })),
       byType: byType.map(t => ({ name: t.name || 'Unknown', count: Number(t.count) })),
       byLevel: byLevel.map(l => ({ name: l.name || 'Unknown', count: Number(l.count) })),
@@ -35,18 +35,22 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getSchools(filters: SchoolFilters): Promise<PaginatedSchools> {
-    const page = filters.page || 1;
-    const limit = filters.limit || 20;
+    const page = Number(filters.page) || 1;
+    const limit = Number(filters.limit) || 20;
     const offset = (page - 1) * limit;
 
     const conditions = [];
-    if (filters.state) conditions.push(ilike(schools.state, filters.state));
-    if (filters.type) conditions.push(ilike(schools.type, filters.type));
-    if (filters.level) conditions.push(ilike(schools.level, filters.level));
-    if (filters.lga) conditions.push(ilike(schools.lga, filters.lga));
+    // Only add conditions if they aren't "all" or undefined
+    if (filters.state && filters.state !== 'all') conditions.push(ilike(schools.state, filters.state));
+    if (filters.type && filters.type !== 'all') conditions.push(ilike(schools.type, filters.type));
+    if (filters.level && filters.level !== 'all') conditions.push(ilike(schools.level, filters.level));
+    if (filters.lga && filters.lga !== 'all') conditions.push(ilike(schools.lga, filters.lga));
+    
     if (filters.search) {
+      // Using sql.raw or proper template literals to prevent SQL injection while allowing partial matches
+      const searchPattern = `%${filters.search}%`;
       conditions.push(
-        sql`(${schools.name} ILIKE ${`%${filters.search}%`} OR ${schools.schoolId} ILIKE ${`%${filters.search}%`})`
+        sql`(${schools.name} ILIKE ${searchPattern} OR ${schools.schoolId} ILIKE ${searchPattern})`
       );
     }
 
@@ -57,7 +61,7 @@ export class DatabaseStorage implements IStorage {
       .from(schools)
       .where(whereClause);
 
-    const total = countResult.count;
+    const total = Number(countResult.count);
     const totalPages = Math.ceil(total / limit);
 
     const data = await db
@@ -90,20 +94,23 @@ export class DatabaseStorage implements IStorage {
 
   async countSchools(): Promise<number> {
     const [result] = await db.select({ count: count() }).from(schools);
-    return result.count;
+    return Number(result.count);
   }
 
   async getFilters() {
-    const states = await db.selectDistinct({ value: schools.state }).from(schools);
-    const types = await db.selectDistinct({ value: schools.type }).from(schools);
-    const levels = await db.selectDistinct({ value: schools.level }).from(schools);
-    const lgas = await db.selectDistinct({ value: schools.lga }).from(schools);
+    // Distinct queries can be slow on large tables; this is fine for now
+    const [states, types, levels, lgas] = await Promise.all([
+      db.selectDistinct({ value: schools.state }).from(schools),
+      db.selectDistinct({ value: schools.type }).from(schools),
+      db.selectDistinct({ value: schools.level }).from(schools),
+      db.selectDistinct({ value: schools.lga }).from(schools),
+    ]);
 
     return {
-      states: states.map(s => s.value).filter(Boolean) as string[],
-      types: types.map(t => t.value).filter(Boolean) as string[],
-      levels: levels.map(l => l.value).filter(Boolean) as string[],
-      lgas: lgas.map(l => l.value).filter(Boolean) as string[],
+      states: states.map(s => s.value).filter(Boolean).sort() as string[],
+      types: types.map(t => t.value).filter(Boolean).sort() as string[],
+      levels: levels.map(l => l.value).filter(Boolean).sort() as string[],
+      lgas: lgas.map(l => l.value).filter(Boolean).sort() as string[],
     };
   }
 }

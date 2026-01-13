@@ -1,20 +1,14 @@
-// netlify/functions/api.ts
 import serverless from "serverless-http";
-import { app } from "../../server/index";
-import { registerRoutes } from "../../server/routes";
-import { Server } from "http";
+import { app, initApp } from "../../server/index";
 
-let preparedApp: any = null;
+let cachedHandler: any;
 
 export const handler = async (event: any, context: any) => {
-  if (!preparedApp) {
-    // Create a dummy server object to satisfy the first argument of registerRoutes
-    // We cast it as Server because we only need the 'app' to have routes registered
-    const dummyServer = {} as Server; 
-    
-    await registerRoutes(dummyServer, app);
-    preparedApp = serverless(app);
+  if (!cachedHandler) {
+    // This calls registerRoutes and sets up middleware
+    await initApp();
+    cachedHandler = serverless(app);
   }
   
-  return preparedApp(event, context);
+  return cachedHandler(event, context);
 };

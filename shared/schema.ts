@@ -59,21 +59,3 @@ export interface PaginatedSchools {
   limit: number;
   totalPages: number;
 }
-
-export interface SchoolFilters {
-  state?: string;
-  type?: string;
-  level?: string;
-  lga?: string;
-  search?: string;
-  page?: number;
-  limit?: number;
-}
-
-export interface PaginatedSchools {
-  data: School[];
-  total: number;
-  page: number;
-  limit: number;
-  totalPages: number;
-}

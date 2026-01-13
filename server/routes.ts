@@ -1,3 +1,4 @@
+// server/routes.ts
 import type { Express, NextFunction } from "express";
 import type { Server } from "http";
 import { storage } from "./storage";
@@ -15,13 +16,18 @@ export async function registerRoutes(
   app.use(async (req: any, res, next) => {
     const authHeader = req.headers.authorization;
     if (!authHeader?.startsWith("Bearer ")) return next();
-
+    
+    try {
     const token = authHeader.split(" ")[1];
     const { data: { user }, error } = await supabase.auth.getUser(token);
 
     if (user && !error) {
       const dbUser = await storage.getUser(user.id);
       req.user = dbUser;
+    } 
+    
+    } catch (e) {
+      console.error("Auth middleware error:", e);
     }
     next();
   });
@@ -55,12 +61,7 @@ export async function registerRoutes(
     const filters = await storage.getFilters();
     res.json(filters);
   });
-
-  app.get(api.schools.analytics.path, async (req, res) => {
-    const analytics = await storage.getAnalytics();
-    res.json(analytics);
-  });
-
+  
   app.get(api.user.get.path, isAuthenticated, async (req: any, res) => {
     res.json(req.user);
   });

@@ -1,18 +1,11 @@
 // shared/routes.ts
 import { z } from 'zod';
-import { insertSchoolSchema, schools } from './schema';
+import { schools, users, type User } from './schema'; // Import from schema
 
 export const errorSchemas = {
-  validation: z.object({
-    message: z.string(),
-    field: z.string().optional(),
-  }),
-  notFound: z.object({
-    message: z.string(),
-  }),
-  internal: z.object({
-    message: z.string(),
-  }),
+  validation: z.object({ message: z.string(), field: z.string().optional() }),
+  notFound: z.object({ message: z.string() }),
+  internal: z.object({ message: z.string() }),
 };
 
 export const api = {
@@ -27,7 +20,7 @@ export const api = {
         lga: z.string().optional(),
         search: z.string().optional(),
         page: z.coerce.number().default(1),
-        limit: z.coerce.number().default(20),
+        limit: z.coerce.number().default(100), // Default to 100 for your data page
       }).optional(),
       responses: {
         200: z.object({
@@ -59,25 +52,13 @@ export const api = {
         }),
       },
     },
-    analytics: {
-      method: 'GET' as const,
-      path: '/api/analytics',
-      responses: {
-        200: z.object({
-          totalSchools: z.number(),
-          byState: z.array(z.object({ name: z.string(), count: z.number() })),
-          byType: z.array(z.object({ name: z.string(), count: z.number() })),
-          byLevel: z.array(z.object({ name: z.string(), count: z.number() })),
-        }),
-      },
-    }
   },
   user: {
     get: {
       method: 'GET' as const,
       path: '/api/user',
       responses: {
-        200: z.custom<User>(),
+        200: z.custom<User>(), // Uses the schema User type
         401: z.object({ message: z.string() }),
       },
     },
@@ -97,27 +78,13 @@ export const api = {
   }
 };
 
-export type User = {
-  id: number;
-  name: string;
-  email: string;
-  bio: string | null;
-  avatarUrl: string | null;
-  isAdmin: boolean | null;
-  createdAt: Date | null;
-};
-
+// Helper for dynamic paths (e.g., /api/schools/123)
 export function buildUrl(path: string, params?: Record<string, string | number>): string {
   let url = path;
   if (params) {
     Object.entries(params).forEach(([key, value]) => {
-      if (url.includes(`:${key}`)) {
-        url = url.replace(`:${key}`, String(value));
-      }
+      url = url.replace(`:${key}`, String(value));
     });
   }
   return url;
 }
-
-export type SchoolResponse = z.infer<typeof api.schools.get.responses[200]>;
-export type SchoolsListResponse = z.infer<typeof api.schools.list.responses[200]>;

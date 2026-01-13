@@ -7,7 +7,14 @@
   directory = "netlify/functions"
   node_bundler = "esbuild"
   # Add all dev-heavy or native modules here to skip bundling errors
-  
+  external_node_modules = [
+    "express", 
+    "vite", 
+    "@babel/core", 
+    "lightningcss", 
+    "framer-motion"
+  ]
+
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/api/:splat"
