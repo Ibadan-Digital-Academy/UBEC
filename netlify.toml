@@ -5,21 +5,13 @@
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"
-  # We exclude these to keep the function small and avoid ESM/CJS conflicts
-  external_node_modules = [
-   "express",
-    "pg",
-    "drizzle-orm",
-    "ws",
-    "vite",
-    "@babel/core",
-    "lightningcss",
-    "framer-motion"
-  ]
 
-[functions."api"]
-  # Specifically for your API function
-  included_files = ["dist/public/index.html"]
+[functions.api]
+  bundle = true
+  included_files = [
+    "server/**",
+    "shared/**"
+  ]
 
 [[redirects]]
   from = "/api/*"
