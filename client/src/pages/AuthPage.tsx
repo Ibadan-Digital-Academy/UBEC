@@ -50,6 +50,10 @@ export default function AuthPage() {
                     : await supabase.auth.signUp({
                           email,
                           password,
+                          options: {
+                              // This tells Supabase: "After confirmation, send them back to the current domain"
+                              emailRedirectTo: `${window.location.origin}/`,
+                          },
                       });
 
             if (error) throw error;

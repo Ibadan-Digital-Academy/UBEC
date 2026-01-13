@@ -18,10 +18,10 @@ function Router() {
         <Switch>
             {/* Public Routes */}
             <Route path="/auth" component={AuthPage} />
+            <Route path="/" component={Home} />
+            <Route path="/data" component={Data} />
 
             {/* Protected Routes - only logged in users can see these */}
-            <ProtectedRoute path="/" component={Home} />
-            <ProtectedRoute path="/data" component={Data} />
             <ProtectedRoute path="/data/:id" component={SchoolDetails} />
             <ProtectedRoute path="/map" component={MapPage} />
             <ProtectedRoute path="/profile" component={Profile} />
