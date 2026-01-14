@@ -1,8 +1,9 @@
-import { Bell, Search, Menu, Filter } from "lucide-react";
+import { Bell, Search, Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useLocation } from "wouter";
+import { useAuth } from "@/hooks/use-auth";
 
 interface HeaderProps {
   onSearch?: (term: string) => void;
@@ -14,6 +15,7 @@ interface HeaderProps {
 export function Header({ onSearch, showSearch = true, title = "Find Schools", subtitle = "Access the Basic Education School List" }: HeaderProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [, setLocation] = useLocation();
+  const { user, isLoading } = useAuth();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,9 +35,9 @@ export function Header({ onSearch, showSearch = true, title = "Find Schools", su
 
       {/* Top Bar */}
       <div className="flex justify-between items-center mb-6 relative z-10">
-        <Button variant="ghost" size="icon" className="text-white hover:bg-white/10 hover:text-white rounded-full h-10 w-10">
-          <Menu className="w-6 h-6" />
-        </Button>
+        <div className="text-white font-medium text-sm">
+          {isLoading ? "Loading..." : (user?.email || "Guest")}
+        </div>
         
         <div className="flex items-center space-x-3">
           <div className="w-10 h-10 bg-white rounded-full p-1 flex items-center justify-center shadow-lg">

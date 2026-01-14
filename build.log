@@ -1,0 +1,4 @@
+
+> rest-express@1.0.0 dev
+> concurrently "npm run dev:server" "npm run dev:client"
+

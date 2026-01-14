@@ -2,8 +2,10 @@ import { BottomNav } from "@/components/BottomNav";
 import { Button } from "@/components/ui/button";
 import { User, Settings, LogOut, Bell, HelpCircle, ChevronRight } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useAuth } from "@/hooks/use-auth";
 
 export default function Profile() {
+  const { user } = useAuth();
   const menuItems = [
     { icon: Bell, label: "Notifications", badge: "2" },
     { icon: Settings, label: "Settings" },
@@ -27,8 +29,8 @@ export default function Profile() {
         </div>
 
         <div className="text-center mb-8 px-6">
-          <h3 className="font-bold text-xl text-gray-900 dark:text-white">Guest User</h3>
-          <p className="text-gray-500 text-sm">guest@example.com</p>
+          <h3 className="font-bold text-xl text-gray-900 dark:text-white">{user?.email || "User"}</h3>
+          <p className="text-gray-500 text-sm">{user?.email || "guest@example.com"}</p>
         </div>
 
         <div className="px-6 space-y-3 flex-1">
