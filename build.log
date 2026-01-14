@@ -2,3 +2,33 @@
 > rest-express@1.0.0 dev
 > concurrently "npm run dev:server" "npm run dev:client"
 
+[0] 
+[0] > rest-express@1.0.0 dev:server
+[0] > cross-env NODE_ENV=development tsx server/index.ts
+[0] 
+[1] 
+[1] > rest-express@1.0.0 dev:client
+[1] > vite
+[1] 
+[1] Port 5173 is in use, trying another one...
+[1] 
+[1]   [32m[1mVITE[22m v7.3.0[39m  [2mready in [0m[1m1484[22m[2m[0m ms[22m
+[1] 
+[1]   [32mΓ₧£[39m  [1mLocal[22m:   [36mhttp://localhost:[1m5174[22m/[39m
+[1] [2m  [32mΓ₧£[39m  [1mNetwork[22m[2m: use [22m[1m--host[22m[2m to expose[22m
+[0] [express] serving on port 5001
+[1] 
+[1] [1m[33mwarn[39m[22m - The class `duration-[1800ms]` is ambiguous and matches multiple utilities.
+[1] [1m[33mwarn[39m[22m - If this is content and not a class, replace it with `duration-&lsqb;1800ms&rsqb;` to silence this warning.
+[1] 
+[1] [1m[33mwarn[39m[22m - The class `duration-[2000ms]` is ambiguous and matches multiple utilities.
+[1] [1m[33mwarn[39m[22m - If this is content and not a class, replace it with `duration-&lsqb;2000ms&rsqb;` to silence this warning.
+[1] 
+[1] [1m[33mwarn[39m[22m - The class `duration-[2500ms]` is ambiguous and matches multiple utilities.
+[1] [1m[33mwarn[39m[22m - If this is content and not a class, replace it with `duration-&lsqb;2500ms&rsqb;` to silence this warning.
+[1] [2m3:58:14 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/Header.tsx[22m
+[1] [2m3:58:17 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/Header.tsx[22m
+[1] [2m3:59:00 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/Header.tsx[22m
+[1] [2m3:59:09 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/Profile.tsx, /src/index.css[22m
+[1] [2m3:59:14 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/Profile.tsx, /src/index.css[22m
+[1] [2m3:59:57 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/Profile.tsx, /src/index.css[22m
