@@ -32,3 +32,5 @@
 [1] [2m3:59:09 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/Profile.tsx, /src/index.css[22m
 [1] [2m3:59:14 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/Profile.tsx, /src/index.css[22m
 [1] [2m3:59:57 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/Profile.tsx, /src/index.css[22m
+[1] ^C
+ResourceUnavailable: The Win32 internal error "No process is on the other end of the pipe." 0xE9 occurred while setting the console window title. Contact Microsoft Customer Support Services.
